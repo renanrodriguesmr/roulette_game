@@ -1,5 +1,7 @@
 package br.com.IME.CasinoRoulette;
 
+import java.util.HashMap;
+
 public class ImportantConstants {
     public static final String PLAYER_STRING = "player";
     public static final String END_STRING = "end";
@@ -24,5 +26,20 @@ public class ImportantConstants {
 
     public static final int MAX_VALUE_ROULETTE = 36;
     public static final int MIN_VALUE_ROULETTE = 1;
+
+    public static final HashMap<String, Integer> MULTIPLIER_FACTOR;
+    static {
+        MULTIPLIER_FACTOR = new HashMap<String, Integer>();
+        MULTIPLIER_FACTOR.put(RED_BLACK,1);
+        MULTIPLIER_FACTOR.put(HIGH_LOW,1);
+        MULTIPLIER_FACTOR.put(EVEN_ODD,1);
+        MULTIPLIER_FACTOR.put(DOZEN,2);
+        MULTIPLIER_FACTOR.put(LINE,5);
+        MULTIPLIER_FACTOR.put(FIVE,6);
+        MULTIPLIER_FACTOR.put(SQUARE,8);
+        MULTIPLIER_FACTOR.put(STREET,11);
+        MULTIPLIER_FACTOR.put(TWO_NUMBERS,17);
+        MULTIPLIER_FACTOR.put(STRAIGHT_UP,35);
+    }
 
 }

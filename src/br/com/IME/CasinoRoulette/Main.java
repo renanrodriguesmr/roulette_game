@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    // TODO LIST:  alterar moedas do jogador conforme o retorno, respostas, problema nas entradas
-    // TODO: refatorar a main e separar as apostas na classe Bet
+    // TODO LIST:  respostas, problema nas entradas
 
     public static void main(String[] args) {
         Player player = null;
@@ -24,17 +23,28 @@ public class Main {
                 }
                 if (type.equals(ImportantConstants.BET_STRING)){
                     String label = reqMsg.getLabel();
+                    int result = 0;
                     if (Arrays.asList(ImportantConstants.BET_TYPE_1).contains(label)){
                         OutsideBet bet = new OutsideBet(label, reqMsg.getIntParamsList());
-                        boolean result = bet.checkResult();
+                        result = bet.checkResult();
                     } else if (Arrays.asList(ImportantConstants.BET_TYPE_2).contains(label)) {
                         AnnouncedBet bet = new AnnouncedBet(label, reqMsg.getIntParamsList());
-                        boolean result = bet.checkResult();
+                        result = bet.checkResult();
                     } else throw new InvalidParameterException();
+                    if (player != null) {
+                        player.setCoins(result);
+                        endGame(player);
+                    }
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    private static void endGame(Player player){
+        int finalCoins = player.getCoins();
+        System.out.println(finalCoins);
+        Player.logout();
     }
 }

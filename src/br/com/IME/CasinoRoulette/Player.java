@@ -26,8 +26,16 @@ public class Player {
         return coins;
     }
 
+    public void setCoins(int value) {
+        this.coins = Math.max(this.coins + value, 0);
+    }
+
     public static Boolean getIsLogged(){
         return isLogged;
+    }
+
+    public static void logout(){
+        isLogged = false;
     }
 
 }

@@ -16,5 +16,6 @@ abstract class Bet {
 
     protected abstract int totalBetCoins();
 
-    public abstract boolean checkResult();
+    public abstract int checkResult();
+
 }

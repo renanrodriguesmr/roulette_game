@@ -41,10 +41,14 @@ public class OutsideBet extends Bet {
     }
 
     @Override
-    public boolean checkResult(){
+    public int checkResult(){
         int value = this.runRoulette();
         boolean result = this.isADesiredResult(value);
         System.out.println("Ganhou:" + result);
-        return result;
+        return this.calculateProfits(result);
+    }
+
+    private int calculateProfits(boolean result){
+        return (result) ? this.totalBetCoins()*(ImportantConstants.MULTIPLIER_FACTOR.get(this.type)) : (-this.totalBetCoins());
     }
 }

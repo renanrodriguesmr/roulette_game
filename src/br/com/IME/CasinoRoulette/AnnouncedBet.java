@@ -30,10 +30,14 @@ public class AnnouncedBet extends Bet {
     }
 
     @Override
-    public boolean checkResult(){
+    public int checkResult(){
         int value = this.runRoulette();
         boolean result = (this.betItems.get(value) != null);
         System.out.println("Ganhou:" + result);
-        return result;
+        return this.calculateProfits(result, value);
+    }
+
+    private int calculateProfits(boolean result, int value){
+        return (result) ? this.betItems.get(value)*(ImportantConstants.MULTIPLIER_FACTOR.get(this.type)) : (-this.totalBetCoins());
     }
 }
