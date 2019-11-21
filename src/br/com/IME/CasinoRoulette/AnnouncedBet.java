@@ -1,5 +1,6 @@
 package br.com.IME.CasinoRoulette;
 
+import java.io.PrintWriter;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,11 +31,16 @@ public class AnnouncedBet extends Bet {
     }
 
     @Override
-    public int checkResult(){
+    public int checkResult(Player player, PrintWriter out){
+        if (!this.checkCoins(player)){
+            String message = ResponseMessages.error_message("not_coins_enough");
+            out.println(message);
+            return 0;
+        }
         int value = this.runRoulette();
         boolean result = (this.betItems.get(value) != null);
         String message = ResponseMessages.bet_message(value, result);
-        System.out.println(message);
+        out.println(message);
         return this.calculateProfits(result, value);
     }
 

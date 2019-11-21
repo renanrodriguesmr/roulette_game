@@ -1,5 +1,7 @@
 package br.com.IME.CasinoRoulette;
 
+import java.io.PrintWriter;
+
 abstract class Bet {
 
     protected void validatePlayer() throws CustomException{
@@ -15,6 +17,11 @@ abstract class Bet {
 
     protected abstract int totalBetCoins();
 
-    public abstract int checkResult();
+    public abstract int checkResult(Player player, PrintWriter out);
+
+    protected boolean checkCoins(Player player){
+        int total = this.totalBetCoins();
+        return player.getCoins() >= total;
+    };
 
 }
