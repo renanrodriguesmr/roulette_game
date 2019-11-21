@@ -7,19 +7,22 @@ import java.util.Scanner;
 
 public class Main {
 
-    // TODO LIST:  respostas, problema nas entradas
-
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Player player = null;
+        System.out.println("Enter with IP:\n");
+        int IP = sc.nextInt();
+        System.out.println("Enter with Port:\n");
+        int PORT = sc.nextInt();
+        System.out.println("Server listening:\n");
         while(true){
-            System.out.println("Enter with client request:\n");
-            Scanner sc = new Scanner(System.in);
             String requestMessage = sc.nextLine();
             try {
                 RequestMessages reqMsg = new RequestMessages(requestMessage);
                 String type = reqMsg.getTypeRequest();
                 if (type.equals(ImportantConstants.PLAYER_STRING)){
                     player = new Player(reqMsg.getLabel(), reqMsg.getIntParamsList()[0]);
+                    String message = ResponseMessages.user_message(player.getName(), player.getCoins());
                 }
                 if (type.equals(ImportantConstants.BET_STRING)){
                     String label = reqMsg.getLabel();
@@ -33,18 +36,23 @@ public class Main {
                     } else throw new InvalidParameterException();
                     if (player != null) {
                         player.setCoins(result);
-                        endGame(player);
+                        String message = ResponseMessages.user_message(player.getName(), player.getCoins());
+                        System.out.println(message);
                     }
                 }
+                if (type.equals(ImportantConstants.END_STRING)){
+                    String message = ResponseMessages.user_message(player.getName(), player.getCoins());
+                    System.out.println(message);
+                    endGame(player);
+                }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                String message = ResponseMessages.error_message(e.getMessage());
+                System.out.println(message);
             }
         }
     }
 
     private static void endGame(Player player){
-        int finalCoins = player.getCoins();
-        System.out.println(finalCoins);
         Player.logout();
     }
 }

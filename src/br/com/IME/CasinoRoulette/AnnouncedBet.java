@@ -33,7 +33,8 @@ public class AnnouncedBet extends Bet {
     public int checkResult(){
         int value = this.runRoulette();
         boolean result = (this.betItems.get(value) != null);
-        System.out.println("Ganhou:" + result);
+        String message = ResponseMessages.bet_message(value, result);
+        System.out.println(message);
         return this.calculateProfits(result, value);
     }
 
