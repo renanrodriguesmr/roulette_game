@@ -1,6 +1,5 @@
 package br.com.IME.CasinoRoulette;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,15 +12,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    @SuppressWarnings("resource")
+	public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         Player player = null;
 
         System.out.println("Enter with Port:\n");
         int PORT = sc.nextInt();
-        String line = sc.nextLine();
 
-        ServerSocket listenSocket = new ServerSocket(59001);
+        ServerSocket listenSocket = new ServerSocket(PORT);
         Socket clientSocket = listenSocket.accept();
 
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -49,10 +48,10 @@ public class Main {
 
                     if (Arrays.asList(ImportantConstants.BET_TYPE_1).contains(label)){
                         OutsideBet bet = new OutsideBet(label, reqMsg.getIntParamsList());
-                        result = bet.checkResult(player);
+                        result = bet.checkResult(player, out);
                     } else if (Arrays.asList(ImportantConstants.BET_TYPE_2).contains(label)) {
                         AnnouncedBet bet = new AnnouncedBet(label, reqMsg.getIntParamsList());
-                        result = bet.checkResult(player);
+                        result = bet.checkResult(player, out);
                     } else throw new InvalidParameterException();
 
                     if (player != null) {
